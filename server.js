@@ -1,32 +1,39 @@
-require('dotenv').config(); 
+require('dotenv').config(); // Carrega as variáveis de ambiente do .env
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
+// =========================================================
+// CONEXÃO COM O MONGODB
+// =========================================================
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('✅ MongoDB conectado!'))
+    .then(() => console.log('✅ MongoDB conectado com sucesso!'))
     .catch(err => console.error('❌ Erro na conexão com o MongoDB:', err));
 
 // =========================================================
 // MIDDLEWARES
 // =========================================================
-// Permite requisições de qualquer origem (necessário para o StackBlitz/Frontend)
-app.use(cors()); 
-app.use(express.json()); 
+app.use(cors()); // Permite requisições do seu frontend (React)
+app.use(express.json()); // Permite analisar corpos de requisição JSON
 
-// =========================================================
-// 🛑 ROTAS DA API (Siga as Rotas do seu AuthContext)
-// =========================================================
-const authRoutes = require('./routes/authRoutes');
-// O Vercel trata o domínio, então apenas o caminho é necessário
-app.use('/users', authRoutes); 
-
-// Rota de Teste Simples
+// Rota de Teste
 app.get('/', (req, res) => {
-    res.send('API Serverless rodando no Vercel!');
+    res.send('Servidor de Backend da Plataforma Online está funcionando!');
 });
 
-// 🛑 EXPORTAÇÃO ESSENCIAL PARA O VERCEL
-module.exports = app;
+// =========================================================
+// 🛑 ROTAS DA API
+// =========================================================
+// Importa as rotas de autenticação
+const authRoutes = require('./routes/authRoutes');
+app.use('/users', authRoutes); 
+// O AuthContext do seu frontend chama 'https://seusite.com/users/signin', 
+// então, a rota base aqui é apenas '/users'.
+
+// Inicia o Servidor
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor Express rodando em http://localhost:${PORT}`);
+});
