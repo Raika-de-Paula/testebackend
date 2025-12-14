@@ -1,4 +1,4 @@
-// 📁 Arquivo: api/index.js (No seu projeto Backend)
+// 📁 Arquivo: api/index.js
 
 require('dotenv').config(); 
 const express = require('express');
