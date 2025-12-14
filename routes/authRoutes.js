@@ -1,9 +1,9 @@
 //.routes/authRoutes
 const express = require('express');
 const router = express.Router();
-const authController = require('./controllers/authController');
-const { protect } = require('./middleware/authMiddleware'); // Importa o middleware de proteção
-const User = require('./models/User'); // Para as rotas que acessam o BD diretamente
+const authController = require('../controllers/authController');
+const { protect } = require('../middleware/authMiddleware'); // Importa o middleware de proteção
+const User = require('../models/User'); // Para as rotas que acessam o BD diretamente
 
 // Rota 1: Cadastro (Pública)
 router.post('/signup', authController.signup);
