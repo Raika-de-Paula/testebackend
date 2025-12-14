@@ -5,11 +5,6 @@ const cors = require('cors');
 
 const app = express();
 
-// =========================================================
-// CONEXÃO COM O MONGODB
-// =========================================================
-// Nota: A conexão é feita aqui para que as funções serverless a reutilizem.
-// O Vercel gerencia o tempo de vida desta função.
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('✅ MongoDB conectado!'))
     .catch(err => console.error('❌ Erro na conexão com o MongoDB:', err));
@@ -24,7 +19,7 @@ app.use(express.json());
 // =========================================================
 // 🛑 ROTAS DA API (Siga as Rotas do seu AuthContext)
 // =========================================================
-const authRoutes = require('../routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 // O Vercel trata o domínio, então apenas o caminho é necessário
 app.use('/users', authRoutes); 
 
