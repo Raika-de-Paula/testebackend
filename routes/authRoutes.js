@@ -1,4 +1,4 @@
-//../api/routes/authRoutes
+//.routes/authRoutes
 const express = require('express');
 const router = express.Router();
 const authController = require('./controllers/authController');
