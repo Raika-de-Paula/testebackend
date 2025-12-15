@@ -9,7 +9,11 @@ const PORT = process.env.PORT || 3000;
 // =========================================================
 // CONEXÃO COM O MONGODB
 // =========================================================
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 10000,
+    socketTimeoutMS: 45000,
+    family: 4,
+})
     .then(() => console.log('✅ MongoDB conectado com sucesso!'))
     .catch(err => console.error('❌ Erro na conexão com o MongoDB:', err));
 
