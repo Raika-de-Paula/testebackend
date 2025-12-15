@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 // Importa as rotas de autenticação
 const authRoutes = require('./routes/authRoutes');
 app.use('/users', authRoutes); 
-// O AuthContext do seu frontend chama 'https://seusite.com/users/signin', 
 // então, a rota base aqui é apenas '/users'.
 
 // Inicia o Servidor
