@@ -30,14 +30,6 @@ router.post('/enroll', protect, async (req, res) => {
     const { courseId } = req.body;
     const userId = req.user._id; // ID obtido do token pelo middleware 'protect'
     
-    // 1. Busca o curso real no BD (NÃO INCLUÍMOS AQUI, mas é o ideal)
-    // 2. Simula a busca de dados do curso (pode vir de um array de mock ou outro modelo)
-    const mockCourses = [
-        { id: 'c1', title: 'Introdução à Programação', teacher: 'Dr. Alan Turing' },
-        { id: 'c2', title: 'Design Gráfico Fundamental', teacher: 'Profa. Ada Lovelace' },
-        { id: 'c3', title: 'Marketing Digital', teacher: 'Prof. Philip Kotler' },
-    ];
-    
     const courseToEnroll = mockCourses.find(c => c.id === courseId);
 
     if (!courseToEnroll) {
@@ -66,6 +58,52 @@ router.post('/enroll', protect, async (req, res) => {
 
     } catch (error) {
         console.error('Erro ao matricular:', error);
+        res.status(500).json({ message: 'Erro interno no servidor.' });
+    }
+});
+
+// =========================================================
+// Rota 5: /unenroll (Trancar Curso - Privada)
+// =========================================================
+router.post('/unenroll', protect, async (req, res) => {
+    const { courseId } = req.body;
+    const userId = req.user._id; 
+
+    if (!courseId) {
+        return res.status(400).json({ message: 'ID do curso é obrigatório.' });
+    }
+
+    try {
+        // 1. Encontra o usuário
+        const user = await User.findById(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado.' });
+        }
+        
+        // Verifica se o curso existe na lista
+        const isEnrolled = user.courses.some(c => c.id === courseId);
+        
+        if (!isEnrolled) {
+            return res.status(400).json({ message: 'Você não está matriculado neste curso.' });
+        }
+        
+        // 2. Remove o curso do array de cursos
+        // Filtra o array, mantendo todos os cursos que NÃO têm o ID fornecido.
+        user.courses = user.courses.filter(c => c.id !== courseId);
+        
+        await user.save();
+        
+        // 3. Retorna o usuário ATUALIZADO (sem a senha)
+        const updatedUser = await User.findById(userId).select('-password');
+
+        res.status(200).json({ 
+            message: 'Curso trancado com sucesso.', 
+            user: updatedUser 
+        });
+
+    } catch (error) {
+        console.error('Erro ao trancar curso:', error);
         res.status(500).json({ message: 'Erro interno no servidor.' });
     }
 });
