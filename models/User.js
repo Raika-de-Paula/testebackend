@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         teacher: { type: String },
         day: {type: String},
         time: { type: String},
-        location: {type: String}  || 'Online',
+        duration: {type: String}  || 'On',
         teacherEmail: {type: String}
     }],
 }, { timestamps: true });
