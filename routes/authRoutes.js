@@ -61,7 +61,7 @@ router.post('/enroll', protect, async (req, res) => {
             teacher: teacher,
             day: day || "A definir",
             time: time || "A definir",
-            location: location || "Online",
+            duration: duration || "que foi",
             teacherEmail: teacherEmail || "contato@escola.com"
         };
         
