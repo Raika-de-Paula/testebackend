@@ -26,9 +26,10 @@ router.get('/me', protect, async (req, res) => {
 // =========================================================
 // Rota 4: /enroll (Matrícula - Privada)
 // =========================================================
+// routes/authRoutes.js
+
 router.post('/enroll', protect, async (req, res) => {
-    // 1. Recebemos todos os detalhes enviados pelo frontend
-    console.log("Usuario  autenticado tentandomatricula:", req.user?.id);
+    // 1. Pegamos os dados vindos diretamente do frontend
     const { 
         courseId, 
         title, 
@@ -37,7 +38,7 @@ router.post('/enroll', protect, async (req, res) => {
         time, 
         location, 
         teacherEmail 
-    } = req.body;
+    } = req.body; // Aqui não usamos mais mockCourses
     
     const userId = req.user._id;
 
@@ -53,7 +54,7 @@ router.post('/enroll', protect, async (req, res) => {
             return res.status(400).json({ message: 'Você já está matriculado neste curso.' });
         }
 
-        // 3. Montamos o objeto do curso com os novos campos para o MongoDB
+        // 3. Montamos o objeto para o MongoDB usando o que veio do frontend
         const newCourseEntry = {
             id: courseId,
             title: title,
@@ -64,11 +65,9 @@ router.post('/enroll', protect, async (req, res) => {
             teacherEmail: teacherEmail || "contato@escola.com"
         };
         
-        // 4. Salva no array de cursos do usuário
         user.courses.push(newCourseEntry);
         await user.save();
         
-        // 5. Retorna o usuário atualizado para o frontend
         const updatedUser = await User.findById(userId).select('-password');
 
         res.status(200).json({ 
