@@ -28,6 +28,7 @@ router.get('/me', protect, async (req, res) => {
 // =========================================================
 router.post('/enroll', protect, async (req, res) => {
     // 1. Recebemos todos os detalhes enviados pelo frontend
+    console.log("Usuario  autenticado tentandomatricula:", req.user?.id);
     const { 
         courseId, 
         title, 

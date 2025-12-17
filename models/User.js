@@ -4,9 +4,9 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     nome: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Senha HASH
+    password: { type: String, required: true },
     cpf: { type: String, required: true, unique: true },
-    dataNascimento: { type: String }, // Mantendo como string simples por enquanto
+    dataNascimento: { type: String },
     telefone: { type: String },
     
     // 🛑 CAMPO PARA ARMAZENAR AS MATRÍCULAS
@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         teacher: { type: String },
         day: {type: String},
         time: { type: String},
-        location: {type: String},
+        location: {type: String}  || 'Online',
         teacherEmail: {type: String}
     }],
 }, { timestamps: true });
