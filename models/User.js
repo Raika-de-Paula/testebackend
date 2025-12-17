@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
         id: { type: String, required: true },
         title: { type: String, required: true },
         teacher: { type: String },
+        day: {type: String},
+        time: { type: String},
+        location: {type: String},
+        teacherEmail: {type: String}
     }],
 }, { timestamps: true });
 
