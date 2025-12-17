@@ -36,7 +36,7 @@ router.post('/enroll', protect, async (req, res) => {
         teacher, 
         day, 
         time, 
-        location, 
+        duration, 
         teacherEmail 
     } = req.body; // Aqui não usamos mais mockCourses
     
