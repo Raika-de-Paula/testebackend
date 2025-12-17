@@ -58,7 +58,7 @@ router.post('/enroll', protect, async (req, res) => {
             id: courseId,
             title: title,
             duration: duration || "40h", // Resolve o erro de referência
-            name: name,
+            teacherName: teacherName,
             day: day || "A definir",
             time: time || "A definir",
             teacherEmail: teacherEmail || "contato@escola.com"
