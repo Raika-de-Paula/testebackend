@@ -28,17 +28,19 @@ router.get('/me', protect, async (req, res) => {
 // =========================================================
 // routes/authRoutes.js
 
+// routes/authRoutes.js
+
 router.post('/enroll', protect, async (req, res) => {
-    // 1. Pegamos os dados vindos diretamente do frontend
+    // 1. Extraia 'duration' do req.body junto com os outros campos
     const { 
         courseId, 
         title, 
         teacher, 
         day, 
         time, 
-        duration, 
+        duration, // A variável deve ser declarada aqui
         teacherEmail 
-    } = req.body; // Aqui não usamos mais mockCourses
+    } = req.body; 
     
     const userId = req.user._id;
 
@@ -49,19 +51,18 @@ router.post('/enroll', protect, async (req, res) => {
             return res.status(404).json({ message: 'Usuário não encontrado.' });
         }
 
-        // 2. Verifica se o aluno já está matriculado
         if (user.courses.some(c => c.id === courseId)) {
-            return res.status(400).json({ message: 'Você já está matriculado neste curso.' });
+            return res.status(400).json({ message: 'Você já está matriculado.' });
         }
 
-        // 3. Montamos o objeto para o MongoDB usando o que veio do frontend
+        // 2. Monte o objeto garantindo que 'duration' existe
         const newCourseEntry = {
             id: courseId,
             title: title,
             teacher: teacher,
             day: day || "A definir",
             time: time || "A definir",
-            duration: duration || "que foi",
+            duration: duration || "40h", // Resolve o erro de referência
             teacherEmail: teacherEmail || "contato@escola.com"
         };
         
