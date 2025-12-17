@@ -33,7 +33,7 @@ router.post('/enroll', protect, async (req, res) => {
     const { 
         courseId, 
         title, 
-        name, 
+        teacherName, 
         day, 
         time, 
         duration, // A variável deve ser declarada aqui
