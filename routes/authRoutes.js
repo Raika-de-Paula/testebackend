@@ -27,28 +27,47 @@ router.get('/me', protect, async (req, res) => {
 // Rota 4: /enroll (Matrícula - Privada)
 // =========================================================
 router.post('/enroll', protect, async (req, res) => {
-    const { courseId } = req.body;
-    const userId = req.user._id; // ID obtido do token pelo middleware 'protect'
+    // 1. Recebemos todos os detalhes enviados pelo frontend
+    const { 
+        courseId, 
+        title, 
+        teacher, 
+        day, 
+        time, 
+        location, 
+        teacherEmail 
+    } = req.body;
     
-    const courseToEnroll = mockCourses.find(c => c.id === courseId);
-
-    if (!courseToEnroll) {
-        return res.status(404).json({ message: 'Curso não encontrado.' });
-    }
+    const userId = req.user._id;
 
     try {
-        // 3. Atualiza o usuário no banco de dados
         const user = await User.findById(userId);
         
-        // Verifica se já está matriculado
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado.' });
+        }
+
+        // 2. Verifica se o aluno já está matriculado
         if (user.courses.some(c => c.id === courseId)) {
             return res.status(400).json({ message: 'Você já está matriculado neste curso.' });
         }
+
+        // 3. Montamos o objeto do curso com os novos campos para o MongoDB
+        const newCourseEntry = {
+            id: courseId,
+            title: title,
+            teacher: teacher,
+            day: day || "A definir",
+            time: time || "A definir",
+            location: location || "Online",
+            teacherEmail: teacherEmail || "contato@escola.com"
+        };
         
-        user.courses.push(courseToEnroll);
+        // 4. Salva no array de cursos do usuário
+        user.courses.push(newCourseEntry);
         await user.save();
         
-        // 4. Retorna o usuário ATUALIZADO (sem a senha)
+        // 5. Retorna o usuário atualizado para o frontend
         const updatedUser = await User.findById(userId).select('-password');
 
         res.status(200).json({ 
