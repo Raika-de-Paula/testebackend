@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
         id: { type: String, required: true },
         title: { type: String, required: true },
         duration: {type: String}  || 'On',
-        teacher: { type: String },
+        name: { type: String },
         day: {type: String},
         time: { type: String},
         teacherEmail: {type: String}

@@ -33,7 +33,7 @@ router.post('/enroll', protect, async (req, res) => {
     const { 
         courseId, 
         title, 
-        teacher, 
+        name, 
         day, 
         time, 
         duration, // A variável deve ser declarada aqui
@@ -58,7 +58,7 @@ router.post('/enroll', protect, async (req, res) => {
             id: courseId,
             title: title,
             duration: duration || "40h", // Resolve o erro de referência
-            teacher: teacher,
+            name: teacher,
             day: day || "A definir",
             time: time || "A definir",
             teacherEmail: teacherEmail || "contato@escola.com"
