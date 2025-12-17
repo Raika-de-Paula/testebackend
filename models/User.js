@@ -13,10 +13,10 @@ const userSchema = new mongoose.Schema({
     courses: [{ 
         id: { type: String, required: true },
         title: { type: String, required: true },
+        duration: {type: String}  || 'On',
         teacher: { type: String },
         day: {type: String},
         time: { type: String},
-        duration: {type: String}  || 'On',
         teacherEmail: {type: String}
     }],
 }, { timestamps: true });

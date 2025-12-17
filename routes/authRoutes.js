@@ -28,8 +28,6 @@ router.get('/me', protect, async (req, res) => {
 // =========================================================
 // routes/authRoutes.js
 
-// routes/authRoutes.js
-
 router.post('/enroll', protect, async (req, res) => {
     // 1. Extraia 'duration' do req.body junto com os outros campos
     const { 
@@ -59,10 +57,10 @@ router.post('/enroll', protect, async (req, res) => {
         const newCourseEntry = {
             id: courseId,
             title: title,
+            duration: duration || "40h", // Resolve o erro de referência
             teacher: teacher,
             day: day || "A definir",
             time: time || "A definir",
-            duration: duration || "40h", // Resolve o erro de referência
             teacherEmail: teacherEmail || "contato@escola.com"
         };
         
