@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "vercel-build": "vite build",
+    "build": "npx vite build",
+    "vercel-build": "npx vite build",
     "start": "node server.js"
   },
   "dependencies": {
@@ -15,5 +15,8 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.0.1",
     "vercel": "^41.0.2"
+  },
+  "devDependencies": {
+    "vite": "^7.3.0"
   }
 }
