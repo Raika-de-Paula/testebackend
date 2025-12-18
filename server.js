@@ -20,7 +20,9 @@ mongoose.connect(process.env.MONGO_URI, {
 // =========================================================
 // MIDDLEWARES
 // =========================================================
-app.use(cors());
+app.use(cors({
+    origin: "https://testefrontend-lemon.vercel.app"
+}));
 app.use(express.json());
 
 // Rota de Teste
