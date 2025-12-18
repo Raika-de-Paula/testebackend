@@ -20,8 +20,8 @@ mongoose.connect(process.env.MONGO_URI, {
 // =========================================================
 // MIDDLEWARES
 // =========================================================
-app.use(cors()); // Permite requisições do seu frontend (React)
-app.use(express.json()); // Permite analisar corpos de requisição JSON
+app.use(cors());
+app.use(express.json());
 
 // Rota de Teste
 app.get('/', (req, res) => {
@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 // Importa as rotas de autenticação
 const authRoutes = require('./routes/authRoutes');
 app.use('/users', authRoutes); 
-// então, a rota base aqui é apenas '/users'.
 
 // Inicia o Servidor
 app.listen(PORT, () => {
