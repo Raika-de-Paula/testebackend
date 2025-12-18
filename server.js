@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 
 // Rota de Teste
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.send('Servidor de Backend da Plataforma Online está funcionando!');
 });
 
@@ -33,9 +33,13 @@ app.get('/', (req, res) => {
 // =========================================================
 // Importa as rotas de autenticação
 const authRoutes = require('./routes/authRoutes');
-app.use('/users', authRoutes); 
+app.use('/api/users', authRoutes); 
 
 // Inicia o Servidor
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor Express rodando em http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`🚀 Servidor Express rodando em http://localhost:${PORT}`);
+    });
+}
+
+module.exports = app;
